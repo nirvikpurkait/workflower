@@ -1,41 +1,67 @@
 {
-  "name": "github-workflow-generator",
-  "displayName": "github-workflow-generator",
-  "description": "",
+  "name": "workflow-generator",
   "version": "0.0.1",
-  "engines": {
-    "vscode": "^1.95.0"
-  },
-  "categories": [
-    "Other"
-  ],
-  "activationEvents": [],
-  "main": "./out/extension.js",
-  "contributes": {
-    "commands": [
-      {
-        "command": "github-workflow-generator.helloWorld",
-        "title": "Hello World"
-      }
-    ]
-  },
+  "displayName": "Workflow Generator",
+  "description": "Easily generate a workflow for GitHub",
   "scripts": {
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
     "pretest": "npm run compile && npm run lint",
     "lint": "eslint src",
-    "test": "vscode-test"
+    "test": "vscode-test",
+    "format": "prettier --write ./src/**/*",
+    "lint:staged": "lint-staged",
+    "generate": "vsce package",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "./src/**/*": "npm run format"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nirvikpurkait/workflow-generator.git"
+  },
+  "license": "MIT",
+  "keywords": [
+    "github",
+    "workflow",
+    "action",
+    "github workflow"
+  ],
+  "author": {
+    "name": "Nirvik Purkait"
+  },
+  "engines": {
+    "vscode": "^1.95.0"
+  },
+  "categories": [
+    "Visualization"
+  ],
+  "activationEvents": [],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "workflow-generator.generateWorkflow",
+        "category": "Workflow generator",
+        "title": "Generate Workflow"
+      }
+    ]
   },
   "devDependencies": {
-    "@types/vscode": "^1.95.0",
     "@types/mocha": "^10.0.9",
     "@types/node": "20.x",
+    "@types/vscode": "^1.95.0",
     "@typescript-eslint/eslint-plugin": "^8.10.0",
     "@typescript-eslint/parser": "^8.7.0",
-    "eslint": "^9.13.0",
-    "typescript": "^5.6.3",
     "@vscode/test-cli": "^0.0.10",
-    "@vscode/test-electron": "^2.4.1"
+    "@vscode/test-electron": "^2.4.1",
+    "@vscode/vsce": "^3.2.1",
+    "eslint": "^9.13.0",
+    "husky": "^9.1.6",
+    "lint-staged": "^15.2.10",
+    "prettier": "^3.3.3",
+    "typescript": "^5.6.3"
   }
 }
