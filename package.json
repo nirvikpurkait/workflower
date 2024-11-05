@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "displayName": "Workflow Generator",
   "description": "Easily generate a workflow for GitHub",
+  "publisher": "nirvikpurkait",
   "scripts": {
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
@@ -13,6 +14,7 @@
     "format": "prettier --write ./src/**/*",
     "lint:staged": "lint-staged",
     "generate": "vsce package",
+    "publish": "vsce publish",
     "prepare": "husky"
   },
   "lint-staged": {
