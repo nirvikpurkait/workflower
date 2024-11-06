@@ -1,6 +1,6 @@
 {
   "name": "workflow-generator",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "displayName": "Workflow Generator",
   "description": "Easily generate a workflow for GitHub",
   "publisher": "nirvikpurkait",
@@ -20,6 +20,7 @@
   "lint-staged": {
     "./src/**/*": "npm run format"
   },
+  "icon": "assets/icons/logo.png",
   "repository": {
     "type": "git",
     "url": "https://github.com/nirvikpurkait/workflow-generator.git"
