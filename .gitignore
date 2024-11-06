@@ -1,7 +1,19 @@
+# build
 out
 dist
+
+# dependency
 node_modules
+
+# testing
 .vscode-test/
+
+# misc
 *.vsix
+.design
+
+# env
 .env
+
+# editor
 .vscode/settings.json

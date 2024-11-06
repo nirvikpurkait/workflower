@@ -1,20 +1,9 @@
 import * as vscode from "vscode";
 
-export function activate(context: vscode.ExtensionContext) {
-  console.log(
-    'Congratulations, your extension "workflow-generator" is now active!'
-  );
-
-  const disposable = vscode.commands.registerCommand(
-    "workflow-generator.generateWorkflow",
-    () => {
-      vscode.window.showInformationMessage(
-        "Hello World from workflow-generator!"
-      );
-    }
-  );
-
-  context.subscriptions.push(disposable);
+export async function activate(context: vscode.ExtensionContext) {
+  console.log(`"Workflow Generator" is now active!`);
 }
 
-export function deactivate() {}
+export async function deactivate() {
+  console.log(`"Workflow Generator" is deactivated!`);
+}
