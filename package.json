@@ -11,7 +11,7 @@
     "pretest": "npm run compile && npm run lint",
     "lint": "eslint src",
     "test": "vscode-test",
-    "format": "prettier --write ./src/**/*",
+    "format": "prettier --write ./*",
     "lint:staged": "lint-staged",
     "generate": "vsce package",
     "publish": "vsce publish",
