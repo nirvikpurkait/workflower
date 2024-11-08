@@ -17,3 +17,4 @@ node_modules
 
 # editor
 .vscode/settings.json
+.vscode/*.code-snippets

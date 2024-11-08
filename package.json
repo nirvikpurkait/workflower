@@ -46,7 +46,21 @@
   ],
   "main": "./out/extension.js",
   "contributes": {
-    "commands": [],
+    "commands": [
+      {
+        "title": "Create New Workflow",
+        "command": "workflow-generator.createNewWorkflow",
+        "category": "Workflow Generator"
+      },
+      {
+        "title": "Refresh",
+        "command": "workflow-generator.refreshWorkflowList",
+        "icon": {
+          "dark": "assets/icons/refresh.svg",
+          "light": "assets/icons/refresh.svg"
+        }
+      }
+    ],
     "viewsContainers": {
       "activitybar": [
         {
@@ -59,19 +73,34 @@
     "views": {
       "workflow-generator": [
         {
-          "id": "workflows",
+          "id": "workflow-generator.workflow-list",
           "name": "Workflows",
-          "visibility": "collapsed"
+          "visibility": "visible"
         },
         {
-          "id": "remote-branches",
-          "visibility": "hidden",
+          "id": "workflow-generator.remote-branches",
+          "visibility": "collapsed",
           "name": "Remote branches"
         },
         {
-          "id": "local branches",
-          "visibility": "visible",
+          "id": "workflow-generator.local-branches",
+          "visibility": "collapsed",
           "name": "Local branches"
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "view": "workflow-generator.workflow-list",
+        "contents": "You don't have any workflows, please create a workflow to continue.\n[Create New Workflow](command:workflow-generator.createNewWorkflow)"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "workflow-generator.refreshWorkflowList",
+          "group": "navigation",
+          "when": "view == workflow-generator.workflow-list"
         }
       ]
     }
