@@ -46,13 +46,35 @@
   ],
   "main": "./out/extension.js",
   "contributes": {
-    "commands": [
-      {
-        "command": "workflow-generator.generateWorkflow",
-        "category": "Workflow generator",
-        "title": "Generate Workflow"
-      }
-    ]
+    "commands": [],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "workflow-generator",
+          "title": "Workflow Generator",
+          "icon": "assets/icons/logo.svg"
+        }
+      ]
+    },
+    "views": {
+      "workflow-generator": [
+        {
+          "id": "workflows",
+          "name": "Workflows",
+          "visibility": "collapsed"
+        },
+        {
+          "id": "remote-branches",
+          "visibility": "hidden",
+          "name": "Remote branches"
+        },
+        {
+          "id": "local branches",
+          "visibility": "visible",
+          "name": "Local branches"
+        }
+      ]
+    }
   },
   "devDependencies": {
     "@types/mocha": "^10.0.9",
