@@ -18,7 +18,7 @@
     "prepare": "husky"
   },
   "lint-staged": {
-    "./src/**/*": "npm run format"
+    "./*": "npm run format"
   },
   "icon": "assets/icons/logo.png",
   "repository": {
@@ -48,16 +48,19 @@
   "contributes": {
     "commands": [
       {
-        "title": "Create New Workflow",
-        "command": "workflow-generator.createNewWorkflow",
-        "category": "Workflow Generator"
-      },
-      {
         "title": "Refresh",
         "command": "workflow-generator.refreshWorkflowList",
         "icon": {
-          "dark": "assets/icons/refresh.svg",
-          "light": "assets/icons/refresh.svg"
+          "dark": "assets/icons/refresh-dark.svg",
+          "light": "assets/icons/refresh-light.svg"
+        }
+      },
+      {
+        "title": "Create New Workflow",
+        "command": "workflow-generator.createNewWorkflow",
+        "icon": {
+          "dark": "assets/icons/add-dark.svg",
+          "light": "assets/icons/add-light.svg"
         }
       }
     ],
@@ -76,16 +79,6 @@
           "id": "workflow-generator.workflow-list",
           "name": "Workflows",
           "visibility": "visible"
-        },
-        {
-          "id": "workflow-generator.remote-branches",
-          "visibility": "collapsed",
-          "name": "Remote branches"
-        },
-        {
-          "id": "workflow-generator.local-branches",
-          "visibility": "collapsed",
-          "name": "Local branches"
         }
       ]
     },
@@ -97,6 +90,11 @@
     ],
     "menus": {
       "view/title": [
+        {
+          "command": "workflow-generator.createNewWorkflow",
+          "group": "navigation@0",
+          "when": "view == workflow-generator.workflow-list"
+        },
         {
           "command": "workflow-generator.refreshWorkflowList",
           "group": "navigation",

@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
-import vscode from "vscode";
+import * as vscode from "vscode";
 
 /**
  * create a workflow tree provider
@@ -16,7 +16,7 @@ export class WorkflowFileTreeProvider
     WorkflowFileTreeItem | undefined | void
   > = this._onDidChangeTreeData.event;
 
-  constructor(private rootPath: string) {}
+  constructor(private workflowFolderPath: string) {}
 
   // method to refresh the tree provider
   refresh(): void {
@@ -32,41 +32,45 @@ export class WorkflowFileTreeProvider
   getChildren(
     element?: WorkflowFileTreeItem
   ): vscode.ProviderResult<WorkflowFileTreeItem[]> {
-    const fileTree = this.workflowFilesPath().map((ymlFilePath) => {
-      return new WorkflowFileTreeItem(ymlFilePath);
+    const fileTree = this.workflowFiles().map((ymlFileName) => {
+      const ymlFilePath = path.join(this.workflowFolderPath, ymlFileName);
+
+      // for each workflow file show the file item in view-tree
+      return new WorkflowFileTreeItem(ymlFileName, ymlFilePath);
     });
 
     return fileTree;
   }
 
   // find all `.yml` files from `.github/workflows`
-  private workflowFilesPath(): string[] {
-    const workflowFilesDir = path.join(
-      this.rootPath.toString(),
-      ".github/workflows"
-    );
-
-    const workflowFilesPathList = fs
-      .readdirSync(workflowFilesDir, {
+  private workflowFiles(): string[] {
+    const workflowFilesList = fs
+      .readdirSync(this.workflowFolderPath, {
         encoding: "utf-8",
       })
       .filter((file) => file.endsWith(".yml"));
 
-    return workflowFilesPathList;
+    return workflowFilesList;
   }
 }
 
 class WorkflowFileTreeItem extends vscode.TreeItem {
-  constructor(public readonly label: string) {
+  constructor(
+    public readonly label: string,
+    filePath: string
+  ) {
     super(label);
 
     this.collapsibleState = vscode.TreeItemCollapsibleState.None;
-    this.iconPath = path.join(
-      __filename,
-      "../../../",
-      "assets",
-      "icons",
-      "yml.svg"
-    );
+    this.iconPath = path.join(__filename, "../../../", "assets/icons/yml.svg");
+
+    /**
+     * onselect of this tree-item execute the following command
+     */
+    this.command = {
+      command: "vscode.open",
+      title: "",
+      arguments: [vscode.Uri.file(filePath)],
+    };
   }
 }

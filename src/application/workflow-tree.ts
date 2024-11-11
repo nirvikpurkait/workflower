@@ -1,6 +1,9 @@
 import * as vscode from "vscode";
 import { WorkflowFileTreeProvider } from "../features/workflow-tree";
 import { refreshWorkflowList } from "../commands/refresh-workflow-tree";
+import { createNewWorkflow } from "../commands/create-new-workflow";
+import path from "node:path";
+import fs from "node:fs";
 
 export function workflowTreeApplication(context: vscode.ExtensionContext) {
   const rootPath =
@@ -17,10 +20,17 @@ export function workflowTreeApplication(context: vscode.ExtensionContext) {
     return;
   }
 
+  const workflowFolderPath = path.join(rootPath, ".github/workflows");
+
+  // if user does not have workflow folder return
+  if (!pathExists(workflowFolderPath)) {
+    return;
+  }
+
   /**
    * create new workflow tree provider
    */
-  const workflowTreeProvider = new WorkflowFileTreeProvider(rootPath);
+  const workflowTreeProvider = new WorkflowFileTreeProvider(workflowFolderPath);
 
   vscode.window.registerTreeDataProvider(
     "workflow-generator.workflow-list",
@@ -28,7 +38,18 @@ export function workflowTreeApplication(context: vscode.ExtensionContext) {
   );
 
   /**
-   * refresh the workflow tree provider to sync
+   * navigation buttons on workflow tree
    */
   refreshWorkflowList(context, workflowTreeProvider);
+  createNewWorkflow(context);
+}
+
+function pathExists(p: string): boolean {
+  try {
+    fs.accessSync(p);
+  } catch {
+    return false;
+  }
+
+  return true;
 }
