@@ -8,3 +8,6 @@ export const workflowGenerator_createNewWorkflow =
 
 export const workflowGenerator_refreshWorkflowList =
   "workflow-generator.refreshWorkflowList";
+
+export const workflowGenerator_openWorkflowInEditor =
+  "workflow-generator.openWorkflowInEditor";

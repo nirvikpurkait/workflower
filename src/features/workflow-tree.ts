@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import * as vscode from "vscode";
+import { workflowGenerator_openWorkflowInEditor } from "../command-list";
 
 /**
  * create a workflow tree provider
@@ -33,10 +34,8 @@ export class WorkflowFileTreeProvider
     element?: WorkflowFileTreeItem
   ): vscode.ProviderResult<WorkflowFileTreeItem[]> {
     const fileTree = this.workflowFiles().map((ymlFileName) => {
-      const ymlFilePath = path.join(this.workflowFolderPath, ymlFileName);
-
       // for each workflow file show the file item in view-tree
-      return new WorkflowFileTreeItem(ymlFileName, ymlFilePath);
+      return new WorkflowFileTreeItem(ymlFileName);
     });
 
     return fileTree;
@@ -55,10 +54,7 @@ export class WorkflowFileTreeProvider
 }
 
 class WorkflowFileTreeItem extends vscode.TreeItem {
-  constructor(
-    public readonly label: string,
-    filePath: string
-  ) {
+  constructor(public readonly label: string) {
     super(label);
 
     this.collapsibleState = vscode.TreeItemCollapsibleState.None;
@@ -68,9 +64,9 @@ class WorkflowFileTreeItem extends vscode.TreeItem {
      * onselect of this tree-item execute the following command
      */
     this.command = {
-      command: "vscode.open",
+      command: workflowGenerator_openWorkflowInEditor,
       title: "",
-      arguments: [vscode.Uri.file(filePath)],
+      arguments: [label],
     };
   }
 }

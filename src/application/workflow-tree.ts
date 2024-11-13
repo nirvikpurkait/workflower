@@ -4,6 +4,7 @@ import { refreshWorkflowList } from "../commands/refresh-workflow-tree";
 import { createNewWorkflow } from "../commands/create-new-workflow";
 import path from "node:path";
 import fs from "node:fs";
+import { openWorkflowInEditor } from "../commands/open-workflow-in-editor";
 
 export function workflowTreeApplication(context: vscode.ExtensionContext) {
   const rootPath =
@@ -37,11 +38,14 @@ export function workflowTreeApplication(context: vscode.ExtensionContext) {
     workflowTreeProvider
   );
 
+  const webviews: Map<string, vscode.WebviewPanel> = new Map();
+
   /**
-   * navigation buttons on workflow tree
+   * register different command for workflow tree
    */
   refreshWorkflowList(context, workflowTreeProvider);
   createNewWorkflow(context);
+  openWorkflowInEditor(context, { webviews });
 }
 
 function pathExists(p: string): boolean {
