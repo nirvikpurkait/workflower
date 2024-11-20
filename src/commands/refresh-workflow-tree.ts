@@ -1,17 +1,14 @@
 import * as vscode from "vscode";
-import { workflowGenerator_refreshWorkflowList } from "../command-list";
+import { workflower_refreshWorkflowList } from "../command-list";
 import { WorkflowFileTreeProvider } from "../features/workflow-tree";
 
 export function refreshWorkflowList(
   context: vscode.ExtensionContext,
-  ymlFileTreeProvider: WorkflowFileTreeProvider
+  workflowFilesTreeProvider: WorkflowFileTreeProvider
 ) {
   context.subscriptions.push(
-    vscode.commands.registerCommand(
-      workflowGenerator_refreshWorkflowList,
-      () => {
-        ymlFileTreeProvider.refresh();
-      }
-    )
+    vscode.commands.registerCommand(workflower_refreshWorkflowList, () => {
+      workflowFilesTreeProvider.refresh();
+    })
   );
 }

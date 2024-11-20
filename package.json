@@ -1,7 +1,7 @@
 {
-  "name": "workflow-generator",
+  "name": "workflower",
   "version": "0.0.2",
-  "displayName": "Workflow Generator",
+  "displayName": "Workflower",
   "description": "Easily generate a workflow for GitHub",
   "publisher": "nirvikpurkait",
   "scripts": {
@@ -23,7 +23,7 @@
   "icon": "assets/icons/logo.png",
   "repository": {
     "type": "git",
-    "url": "https://github.com/nirvikpurkait/workflow-generator.git"
+    "url": "https://github.com/nirvikpurkait/workflower.git"
   },
   "license": "MIT",
   "keywords": [
@@ -49,7 +49,7 @@
     "commands": [
       {
         "title": "Refresh",
-        "command": "workflow-generator.refreshWorkflowList",
+        "command": "workflower.refreshWorkflowList",
         "icon": {
           "dark": "assets/icons/refresh-dark.svg",
           "light": "assets/icons/refresh-light.svg"
@@ -57,7 +57,7 @@
       },
       {
         "title": "Create New Workflow",
-        "command": "workflow-generator.createNewWorkflow",
+        "command": "workflower.createNewWorkflow",
         "icon": {
           "dark": "assets/icons/add-dark.svg",
           "light": "assets/icons/add-light.svg"
@@ -67,16 +67,16 @@
     "viewsContainers": {
       "activitybar": [
         {
-          "id": "workflow-generator",
+          "id": "workflower",
           "title": "Workflow Generator",
           "icon": "assets/icons/logo.svg"
         }
       ]
     },
     "views": {
-      "workflow-generator": [
+      "workflower": [
         {
-          "id": "workflow-generator.workflow-list",
+          "id": "workflower.workflow-list",
           "name": "Workflows",
           "visibility": "visible"
         }
@@ -84,26 +84,27 @@
     },
     "viewsWelcome": [
       {
-        "view": "workflow-generator.workflow-list",
-        "contents": "You don't have any workflows, please create a workflow to continue.\n[Create New Workflow](command:workflow-generator.createNewWorkflow)"
+        "view": "workflower.workflow-list",
+        "contents": "You don't have any workflows, please create a workflow to continue.\n[Create New Workflow](command:workflower.createNewWorkflow)"
       }
     ],
     "menus": {
       "view/title": [
         {
-          "command": "workflow-generator.createNewWorkflow",
+          "command": "workflower.createNewWorkflow",
           "group": "navigation@0",
-          "when": "view == workflow-generator.workflow-list"
+          "when": "view == workflower.workflow-list"
         },
         {
-          "command": "workflow-generator.refreshWorkflowList",
+          "command": "workflower.refreshWorkflowList",
           "group": "navigation",
-          "when": "view == workflow-generator.workflow-list"
+          "when": "view == workflower.workflow-list"
         }
       ]
     }
   },
   "devDependencies": {
+    "@types/js-yaml": "^4.0.9",
     "@types/mocha": "^10.0.9",
     "@types/node": "20.x",
     "@types/vscode": "^1.95.0",
@@ -117,5 +118,8 @@
     "lint-staged": "^15.2.10",
     "prettier": "^3.3.3",
     "typescript": "^5.6.3"
+  },
+  "dependencies": {
+    "js-yaml": "^4.1.0"
   }
 }

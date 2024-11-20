@@ -3,11 +3,9 @@
  * find-out all available commands.
  */
 
-export const workflowGenerator_createNewWorkflow =
-  "workflow-generator.createNewWorkflow";
+export const workflower_createNewWorkflow = "workflower.createNewWorkflow";
 
-export const workflowGenerator_refreshWorkflowList =
-  "workflow-generator.refreshWorkflowList";
+export const workflower_refreshWorkflowList = "workflower.refreshWorkflowList";
 
-export const workflowGenerator_openWorkflowInEditor =
-  "workflow-generator.openWorkflowInEditor";
+export const workflower_openWorkflowInEditor =
+  "workflower.openWorkflowInEditor";

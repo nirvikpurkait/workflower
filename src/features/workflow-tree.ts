@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import * as vscode from "vscode";
-import { workflowGenerator_openWorkflowInEditor } from "../command-list";
+import { workflower_openWorkflowInEditor } from "../command-list";
 
 /**
  * create a workflow tree provider
@@ -34,8 +34,9 @@ export class WorkflowFileTreeProvider
     element?: WorkflowFileTreeItem
   ): vscode.ProviderResult<WorkflowFileTreeItem[]> {
     const fileTree = this.workflowFiles().map((ymlFileName) => {
+      const filePath = path.join(this.workflowFolderPath, ymlFileName);
       // for each workflow file show the file item in view-tree
-      return new WorkflowFileTreeItem(ymlFileName);
+      return new WorkflowFileTreeItem(ymlFileName, filePath);
     });
 
     return fileTree;
@@ -47,6 +48,7 @@ export class WorkflowFileTreeProvider
       .readdirSync(this.workflowFolderPath, {
         encoding: "utf-8",
       })
+      // todo: find all valid yml files, i.e do not consider just `.yml` file as a valid file
       .filter((file) => file.endsWith(".yml"));
 
     return workflowFilesList;
@@ -54,7 +56,10 @@ export class WorkflowFileTreeProvider
 }
 
 class WorkflowFileTreeItem extends vscode.TreeItem {
-  constructor(public readonly label: string) {
+  constructor(
+    public readonly label: string,
+    ymlFilePath: string
+  ) {
     super(label);
 
     this.collapsibleState = vscode.TreeItemCollapsibleState.None;
@@ -64,9 +69,9 @@ class WorkflowFileTreeItem extends vscode.TreeItem {
      * onselect of this tree-item execute the following command
      */
     this.command = {
-      command: workflowGenerator_openWorkflowInEditor,
+      command: workflower_openWorkflowInEditor,
       title: "",
-      arguments: [label],
+      arguments: [label, ymlFilePath],
     };
   }
 }

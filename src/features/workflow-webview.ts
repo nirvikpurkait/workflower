@@ -4,11 +4,14 @@ export function createWorkflowWebview(
   context: vscode.ExtensionContext,
   {
     fileName,
-    webviews,
-  }: { fileName: string; webviews: Map<string, vscode.WebviewPanel> }
+    openedWorkflowWebviews,
+  }: {
+    fileName: string;
+    openedWorkflowWebviews: Map<string, vscode.WebviewPanel>;
+  }
 ) {
   const workflowWebviewPanel = vscode.window.createWebviewPanel(
-    "workflow-generator.workflowWebview",
+    "workflower.workflowWebview",
     fileName,
     { viewColumn: vscode.ViewColumn.One },
     {
@@ -27,13 +30,16 @@ export function createWorkflowWebview(
   workflowWebviewPanel.iconPath = fileIconPath;
 
   workflowWebviewPanel.onDidDispose(
+    /**
+     * provide clean ups for webview
+     */
     () => {
-      // provide cleanups for webview
-      webviews.delete(fileName);
+      // remove opened workflow webview data from `openedWorkflowWebviews`
+      openedWorkflowWebviews.delete(fileName);
     },
     null,
     context.subscriptions
   );
 
-  webviews.set(fileName, workflowWebviewPanel);
+  openedWorkflowWebviews.set(fileName, workflowWebviewPanel);
 }

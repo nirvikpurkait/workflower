@@ -1,5 +1,5 @@
 import * as vscode from "vscode";
-import { WorkflowFileTreeProvider } from "../features/workflow-tree";
+import { WorkflowFileTreeProvider } from "./workflow-tree";
 import { refreshWorkflowList } from "../commands/refresh-workflow-tree";
 import { createNewWorkflow } from "../commands/create-new-workflow";
 import path from "node:path";
@@ -22,8 +22,10 @@ export function workflowTreeApplication(context: vscode.ExtensionContext) {
   }
 
   const workflowFolderPath = path.join(rootPath, ".github/workflows");
-
-  // if user does not have workflow folder return
+  /**
+   * if user does not have workflow folder show welcome UI,
+   * generated from `contributes.viewsWelcome` from `package.json`
+   */
   if (!pathExists(workflowFolderPath)) {
     return;
   }
@@ -34,18 +36,21 @@ export function workflowTreeApplication(context: vscode.ExtensionContext) {
   const workflowTreeProvider = new WorkflowFileTreeProvider(workflowFolderPath);
 
   vscode.window.registerTreeDataProvider(
-    "workflow-generator.workflow-list",
+    "workflower.workflow-list",
     workflowTreeProvider
   );
 
-  const webviews: Map<string, vscode.WebviewPanel> = new Map();
+  // used `Map` for better time complexity
+  const openedWorkflowWebviews: Map<string, vscode.WebviewPanel> = new Map();
 
   /**
    * register different command for workflow tree
    */
   refreshWorkflowList(context, workflowTreeProvider);
   createNewWorkflow(context);
-  openWorkflowInEditor(context, { webviews });
+  openWorkflowInEditor(context, {
+    openedWorkflowWebviews: openedWorkflowWebviews,
+  });
 }
 
 function pathExists(p: string): boolean {
