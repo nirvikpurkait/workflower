@@ -1,6 +1,6 @@
 {
   "name": "workflower",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "displayName": "Workflower",
   "description": "Easily generate a workflow for GitHub",
   "publisher": "nirvikpurkait",
